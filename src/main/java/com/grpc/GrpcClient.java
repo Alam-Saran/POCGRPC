@@ -220,6 +220,7 @@ public class GrpcClient extends Thread {
             String singleChar = "a";
             for (int i = 0; i < msgSizeKB; i++) {
                 sb.append(singleChar);
+        
             }
             for (; ; ) {
                 ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8083).usePlaintext().build();
@@ -230,7 +231,7 @@ public class GrpcClient extends Thread {
                 channel.shutdown();
             }
         } catch (Exception e) {
-            System.out.println("Caught inside run().");
+            System.out.println("An Error Occured " +e.getMessage());
         }
     }
 }
