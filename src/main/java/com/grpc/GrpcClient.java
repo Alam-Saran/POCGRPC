@@ -231,7 +231,7 @@ public class GrpcClient extends Thread {
                 channel.shutdown();
             }
         } catch (Exception e) {
-            System.out.println("An Error Occured " +e.getMessage());
+            System.out.println("An Error Occured ");
         }
     }
 }
