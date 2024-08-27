@@ -214,16 +214,20 @@ public class GrpcClient extends Thread {
     @Override
     public void run() {
         try {
-           // int msgSizeKB = 450000000; // 450 MB data ,java.lang.OutOfMemoryError: Java heap space
-            int msgSizeKB =   50000000; //1 MB data,
-            StringBuilder sb = new StringBuilder(msgSizeKB);
+           int msgSizeKB = 1000000; //1 MB data,
+            int oneMB = 1024 * 1024;
+            StringBuilder sb = new StringBuilder(oneMB);
+            String singleChar = "a";
+            for (int i = 0; i < msgSizeKB; i++) {
+                sb.append(singleChar);
+            }
             for (; ; ) {
                 ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8083).usePlaintext().build();
                 GreeterGrpc.GreeterBlockingStub bookStub = GreeterGrpc.newBlockingStub(channel);
                 HelloReply reply = bookStub.sayHello(HelloRequest.newBuilder().setKeyData(ByteString.copyFromUtf8(sb.toString())).build());
                 //sb = null;
                 System.out.println("Response from GrpcServer=" + reply.getMessage());
-                channel.shutdownNow();
+                channel.shutdown();
             }
         } catch (Exception e) {
             System.out.println("Caught inside run().");
