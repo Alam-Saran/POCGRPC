@@ -10,7 +10,6 @@ public class GreeterService extends GreeterGrpc.GreeterImplBase {
     public void sayHello(HelloRequest request, StreamObserver<HelloReply> responseObserver) {
 
         System.out.println("Request Key Data this "+ request.getKeyData());
-        //Check here request is not able to send to server side->ck any helloworld.
         ServerCallStreamObserver clientCallStreamObserver=(ServerCallStreamObserver)responseObserver;
         clientCallStreamObserver.setOnReadyHandler(()-> {
             if(clientCallStreamObserver.isReady()){
